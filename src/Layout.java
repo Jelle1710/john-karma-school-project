@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class Layout {
 
-    private ArrayList<Kamer> kamers;
+    private ArrayList<Ruimte> ruimtes;
 
-    private  ArrayList<Kamer> verplichteElementen;
+    private  ArrayList<Ruimte> verplichteElementen;
 
     private HashMap<String, GridVakje> grid;
 
@@ -22,23 +22,23 @@ public class Layout {
 
     //constructor
     public Layout() {
-        kamers = new ArrayList<>();
+        ruimtes = new ArrayList<>();
         verplichteElementen = new ArrayList<>();
         grid = new HashMap<>();
     }
 
-    //add meegegeven kamer aan lijst van kamers
-    public void addKamer(Kamer k) {
-        kamers.add(k);
+    //add meegegeven kamer aan lijst van ruimtes
+    public void addKamer(Ruimte ruimte) {
+        ruimtes.add(ruimte);
     }
 
     // bepaal hoe groot hotel moet zijn
     public void berekenGridGrootte() {
 
-        for (Kamer k : kamers) { // voor aantal kamers in de lijst
+        for (Ruimte ruimte : ruimtes) { // voor aantal ruimtes in de lijst
 
-            int right = k.getPositionX() + k.getDimensionW() - 1; // positie x plus hoe wijd de kamer is (-1 voor de x positie die al is meegerekend)
-            int bottom = k.getPositionY() + k.getDimensionH() - 1; // positie y plus hoe hoog de kamer is (-1 voor de y positie die al is meegerekend)
+            int right = ruimte.getPositionX() + ruimte.getDimensionW() - 1; // positie x plus hoe wijd de kamer is (-1 voor de x positie die al is meegerekend)
+            int bottom = ruimte.getPositionY() + ruimte.getDimensionH() - 1; // positie y plus hoe hoog de kamer is (-1 voor de y positie die al is meegerekend)
 
             if (right > gridBreedte) { //zoek de meest rechtse positie+wijdte
                 gridBreedte = right; // dat is nu de breedte
@@ -71,15 +71,15 @@ public class Layout {
         }
     }
 
-    // plaats kamers
+    // plaats ruimtes
 
     public void plaatsKamers() {
-        for (Kamer kamer : kamers) { // voor elke kamer in de lijst van kamers
-            int startX = kamer.getPositionX() ; // get de X positie -1 (de lift zit al op 0,0 dus we doen geen -1)
-            int startY = kamer.getPositionY() -1; // get de Y positie -1 (posities beginnen vanaf 1 dus -1)
+        for (Ruimte ruimte : ruimtes) { // voor elke ruimte in de lijst van ruimtes
+            int startX = ruimte.getPositionX() ; // get de X positie -1 (de lift zit al op 0,0 dus we doen geen -1)
+            int startY = ruimte.getPositionY() -1; // get de Y positie -1 (posities beginnen vanaf 1 dus -1)
 
-            int w = kamer.getDimensionW(); // get de wijdte
-            int h = kamer.getDimensionH(); // get de lengte
+            int w = ruimte.getDimensionW(); // get de wijdte
+            int h = ruimte.getDimensionH(); // get de lengte
 
             for (int y = startY; y < startY + h; y++) { // start bij de y positie, voor elke stap die kleiner is dan y + de hoogte
                 for (int x = startX; x < startX + w; x++) { // start bij de x positie, voor elke stap die kleiner is dan x + de breedte
@@ -87,7 +87,7 @@ public class Layout {
                     GridVakje vak = getGridVakje(x, y); // get het gridvakje die bij die coordinaten hoort
 
                     if (vak != null) { // als die bestaat
-                        vak.zetInhoud(kamer.getAreaType(), kamer.getClassification()); // zet de inhoud van het vakje en geef het type en de classificatie mee (aantal sterren)
+                        vak.zetInhoud(ruimte); // zet de inhoud van het vakje en geef het type en de classificatie mee (aantal sterren)
 
                         // bepaal of dit vakje een top-rand moet hebben
                         boolean top;
@@ -126,7 +126,7 @@ public class Layout {
                 }
             }
         }
-        for (Kamer element : verplichteElementen) { // voor elke element in de lijst van verplichte elementen
+        for (Ruimte element : verplichteElementen) { // voor elke element in de lijst van verplichte elementen
             int startX = element.getPositionX() -1; // get de Y positie -1 (posities beginnen vanaf 1 dus -1)
             int startY = element.getPositionY() -1; // get de Y positie -1 (posities beginnen vanaf 1 dus -1)
 
@@ -139,7 +139,7 @@ public class Layout {
                     GridVakje vak = getGridVakje(x, y); // get het gridvakje die bij die coordinaten hoort
 
                     if (vak != null) { // als die bestaat
-                        vak.zetInhoud(element.getAreaType(), element.getClassification()); // zet de inhoud van het vakje en geef het type en de classificatie mee (aantal sterren)
+                        vak.zetInhoud(element); // zet de inhoud van het vakje en geef het type en de classificatie mee (aantal sterren)
 
                         // bepaal of dit vakje een top-rand moet hebben
                         boolean top;
@@ -193,22 +193,33 @@ public class Layout {
 
     public void addverplichteElementen(Layout layout) {
         String schachtDimension = "1," + gridLengte/2;
-        layout.addKamerBuitenJson("Schacht", "1,1", schachtDimension, 9999, null);
+        layout.addKamerBuitenJson("Schacht", "1,1", schachtDimension);
         String verdiepingLift = "1," + (gridLengte+1)/2;
-        layout.addKamerBuitenJson("Lift", verdiepingLift, "1,1", 9999, null);
+        layout.addKamerBuitenJson("Lift", verdiepingLift, "1,1");
         String schachtStart = "1," + (gridLengte/2 + 2);
-        layout.addKamerBuitenJson("Schacht", schachtStart, schachtDimension, 9999, null);
+        layout.addKamerBuitenJson("Schacht", schachtStart, schachtDimension);
         String trappenPosition = gridBreedte + ",1";
         String trappenDimension = "1," + gridLengte;
-        layout.addKamerBuitenJson("Trappen", trappenPosition, trappenDimension, 9999, null);
+        layout.addKamerBuitenJson("Trappen", trappenPosition, trappenDimension);
         String lobbyPosition = "2," + gridLengte;
         String lobbyDimension = gridLengte-3 + ",1";
-        layout.addKamerBuitenJson("Lobby", lobbyPosition, lobbyDimension, 9999, null);
+        layout.addKamerBuitenJson("Lobby", lobbyPosition, lobbyDimension);
     }
 
-    public void addKamerBuitenJson(String AreaType, String position, String dimension, long capacity, String classification){
-        if (AreaType.equals("Lift")) {
-            verplichteElementen.add( new Lift(AreaType, position, dimension, capacity, classification, (gridLengte + 1) / 2));
-        } else verplichteElementen.add(new Kamer(AreaType, position, dimension, capacity, classification));
+    public void addKamerBuitenJson(String AreaType, String position, String dimension){
+        switch (AreaType) {
+            case "Lift":
+                verplichteElementen.add( new Lift(AreaType, position, dimension, (gridLengte + 1) / 2));
+                break;
+            case "Schacht":
+                verplichteElementen.add(new Schacht(AreaType, position, dimension));
+                break;
+            case "Trappen":
+                verplichteElementen.add(new Trappenhuis(AreaType, position, dimension));
+                break;
+            case "Lobby":
+                verplichteElementen.add(new Lobby(AreaType, position, dimension));
+                break;
+        }
     }
 }

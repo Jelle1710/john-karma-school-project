@@ -33,10 +33,28 @@
 
 
                 // maak een nieuwe kamer aan met de attributen die we net hebben opgehaald
-                Kamer kamer = new Kamer(areaType, position, dimension, capacity, classification);
 
-                // zet de kamer in de layout
-                layout.addKamer(kamer);
+                switch (areaType) {
+                    case "Room":
+                        Ruimte kamer = new Kamer(areaType, position, dimension, classification);
+                        // zet de kamer in de layout
+                        layout.addKamer(kamer);
+                        break;
+                    case "Restaurant":
+                        Ruimte restaurant = new Restaurant(areaType, position, dimension, capacity);
+                        layout.addKamer(restaurant);
+                        break;
+                    case "Fitness":
+                        Ruimte fitness = new Fitness(areaType, position, dimension);
+                        layout.addKamer(fitness);
+                        break;
+                    case "Cinema":
+                        Ruimte bios = new Bioscoop(areaType, position, dimension);
+                        layout.addKamer(bios);
+                        break;
+                    default:
+                        break;
+                }
 
             }
             return layout; // return de layout

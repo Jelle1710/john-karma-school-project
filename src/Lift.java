@@ -1,11 +1,11 @@
 import javax.swing.*;
 
-public class Lift extends Kamer {
+public class Lift extends Ruimte {
 
     private int verdieping;
 
-    public Lift(String areaType, String position, String dimension, long capacity, String classification, int verdieping) {
-        super(areaType, position, dimension, capacity, classification);
+    public Lift(String areaType, String position, String dimension, int verdieping) {
+        super(areaType, position, dimension);
         this.verdieping = verdieping;
     }
 

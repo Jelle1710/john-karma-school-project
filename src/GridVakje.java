@@ -22,11 +22,11 @@ public class GridVakje {
     }
 
     // zet wat er in het vakje zit
-    public void zetInhoud(String areaType, String classification) {
+    public void zetInhoud(Ruimte ruimte) {
         String label;
-        if (areaType.equals("Room")) { // als het een kamer is
-            label = areaType+ " "+classification; // zet er het aantal sterren bij
-        } else label = areaType; // anders niet
+        if (ruimte.getAreaType().equals("Room")) { // als het een kamer is
+            label = ruimte.getAreaType() + " " + ((Kamer) ruimte).getClassification(); // zet er het aantal sterren bij
+        } else label = ruimte.getAreaType(); // anders niet
         this.inhoud = label; // zet de inhoud
         Vakjepanel.add(new JLabel(inhoud)); // maak een Jlabel aan voor de inhoudstekst en plaats in het vakjespaneel
     }
