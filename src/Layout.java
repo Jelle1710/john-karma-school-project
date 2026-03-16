@@ -209,7 +209,7 @@ public class Layout {
     public void addKamerBuitenJson(String AreaType, String position, String dimension){
         switch (AreaType) {
             case "Lift":
-                verplichteElementen.add( new Lift(AreaType, position, dimension, (gridLengte + 1) / 2));
+                verplichteElementen.add(new Lift(AreaType, position, dimension, (gridLengte + 1) / 2, true));
                 break;
             case "Schacht":
                 verplichteElementen.add(new Schacht(AreaType, position, dimension));

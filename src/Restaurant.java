@@ -7,6 +7,13 @@ public class Restaurant extends Ruimte {
         this.capacity = capacity;
     }
 
+    public void plaatsGast(){
+
+    }
+    public void gastAfrekenen(){
+
+    }
+
     public long getCapacity() {
         return capacity;
     }

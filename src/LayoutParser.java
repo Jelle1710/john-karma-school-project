@@ -36,9 +36,30 @@
 
                 switch (areaType) {
                     case "Room":
-                        Ruimte kamer = new Kamer(areaType, position, dimension, classification);
-                        // zet de kamer in de layout
-                        layout.addKamer(kamer);
+                        switch (classification) {
+                            case "1 Star":
+                                Ruimte kamer1 = new Kamer(areaType, position, dimension, RoomClassificatie.eenSter);
+                                // zet de kamer in de layout
+                                layout.addKamer(kamer1);
+                                break;
+                            case "2 Star":
+                                Ruimte kamer2 = new Kamer(areaType, position, dimension, RoomClassificatie.tweeSterren);
+                                layout.addKamer(kamer2);
+                                break;
+                            case "3 Star":
+                                Ruimte kamer3 = new Kamer(areaType, position, dimension, RoomClassificatie.drieSterren);
+                                // zet de kamer in de layout
+                                layout.addKamer(kamer3);
+                                break;
+                            case "4 Star":
+                                Ruimte kamer4 = new Kamer(areaType, position, dimension, RoomClassificatie.vierSterren);
+                                layout.addKamer(kamer4);
+                                break;
+                            case "5 Star":
+                                Ruimte kamer5 = new Kamer(areaType, position, dimension, RoomClassificatie.vijfSterren);
+                                layout.addKamer(kamer5);
+                                break;
+                        }
                         break;
                     case "Restaurant":
                         Ruimte restaurant = new Restaurant(areaType, position, dimension, capacity);
@@ -49,7 +70,7 @@
                         layout.addKamer(fitness);
                         break;
                     case "Cinema":
-                        Ruimte bios = new Bioscoop(areaType, position, dimension);
+                        Ruimte bios = new Bioscoop(areaType, position, dimension, 20);
                         layout.addKamer(bios);
                         break;
                     default:
